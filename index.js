@@ -3,10 +3,12 @@ const httpProxy = require('express-http-proxy');
 const express = require('express');
 const app = express();
 var logger = require('morgan');
+var cors = require('cors');
 const jwt = require('jsonwebtoken');
 // const redis = require('./redisClient');
 
 app.use(logger('dev'));
+app.use(cors);
 
 const {
     MS_CHECKOUT,
