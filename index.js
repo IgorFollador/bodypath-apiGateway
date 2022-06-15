@@ -8,7 +8,7 @@ const jwt = require('jsonwebtoken');
 // const redis = require('./redisClient');
 
 app.use(logger('dev'));
-app.use(cors);
+app.use(cors());
 
 const {
     MS_CHECKOUT,
