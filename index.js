@@ -25,18 +25,19 @@ app.use('/checkout', (req, res) => checkoutServiceProxy(req, res));
 
 app.use((req, res, next) => {
     let token = req.headers.authorization;
-
     if(!token) return res.sendStatus(401);
     token = token.replace('Bearer ', "");
-        
-    jwt.verify(token, process.env.SECRET, (err, decoded) => {
-        console.log(token);
-        console.log(decoded.user_id);
-        if(err) return res.status(401).send({ error: 'Token inválido'});
 
-        req.user_id = decoded.user_id;
-        return next();
-    });
+    var payload;
+	try {
+		payload = jwt.verify(token, process.env.SECRET);
+	} catch (error) {
+		if (error instanceof jwt.JsonWebTokenError) {
+			return res.status(401).send({ error: error.message })
+		}
+		return res.status(400).send({ error: error.message })
+	}
+    return next();
 })
 
 app.use('/phyisical_evaluation', (req, res, next) => physicalEvaluationServiceProxy(req, res, next));
