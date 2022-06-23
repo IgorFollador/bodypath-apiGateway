@@ -13,12 +13,15 @@ app.use(cors());
 const {
     MS_CHECKOUT,
     MS_CUSTOMER,
-    MS_PHYSICAL_EVALUATION
+    MS_PHYSICAL_EVALUATION,
+    MS_FOOD_PLANS
   } = require('./URLs');
   
 const checkoutServiceProxy = httpProxy(MS_CHECKOUT);
 const customerServiceProxy = httpProxy(MS_CUSTOMER);
 const physicalEvaluationServiceProxy = httpProxy(MS_PHYSICAL_EVALUATION);
+const foodPlanServiceProxy = httpProxy(MS_FOOD_PLANS);
+
 
 app.get('/', (req, res) => res.send('API Gateway BodyPath'));
 app.use('/checkout', (req, res) => checkoutServiceProxy(req, res));
@@ -35,8 +38,9 @@ app.use((req, res, next) => {
     })
 })
 
-app.use('/phyisical_evaluation', (req, res, next) => physicalEvaluationServiceProxy(req, res, next));
 app.use('/customer', (req, res, next) => customerServiceProxy(req, res, next));
+app.use('/phyisical_evaluation', (req, res, next) => physicalEvaluationServiceProxy(req, res, next));
+app.use('/food_plans', (req, res, next) => foodPlanServiceProxy(req, res, next));
 
 app.listen(10000, () => {
     console.log('API Gateway running!');
