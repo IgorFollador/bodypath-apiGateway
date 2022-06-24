@@ -7,6 +7,8 @@ var cors = require('cors');
 const jwt = require('jsonwebtoken');
 // const redis = require('./redisClient');
 
+const port = process.env.PORT || 10000;
+
 app.use(logger('dev'));
 app.use(cors());
 
@@ -42,6 +44,6 @@ app.use('/customer', (req, res, next) => customerServiceProxy(req, res, next));
 app.use('/phyisical_evaluation', (req, res, next) => physicalEvaluationServiceProxy(req, res, next));
 app.use('/food_plan', (req, res, next) => foodPlanServiceProxy(req, res, next));
 
-app.listen(10000, () => {
+app.listen(port, () => {
     console.log('API Gateway running!');
 })
